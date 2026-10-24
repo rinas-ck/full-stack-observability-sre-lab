@@ -1,5 +1,25 @@
+# Python
 __pycache__/
 *.py[cod]
 .venv/
-.env
 .pytest_cache/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials*
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.example.tfvars
+crash.log
+
+# Backup files
+*.bak
