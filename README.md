@@ -106,6 +106,36 @@ Use the configured application port and confirm the endpoint behavior in `app/ap
 
 ## Observability Capabilities
 
+### Service-Level Objectives (SLOs)
+
+The project includes Prometheus recording rules in `prometheus/rules/slo.yml` to calculate service-level indicators (SLIs) for API reliability and performance.
+
+| Recording rule | Purpose |
+|---|---|
+| `api:request_success:ratio_rate5m` | Measures the successful-request ratio over a five-minute window |
+| `api:request_latency_under_300ms:ratio_rate5m` | Measures the proportion of requests completed within 300 ms |
+| `api:slo_error_budget_remaining:ratio` | Estimates the remaining error budget against a 99.9% availability objective |
+
+**Validation**
+
+Validate the recording-rule configuration:
+
+```bash
+docker compose exec prometheus \
+  promtool check rules /etc/prometheus/rules/slo.yml
+```
+
+Query the recording rules in Prometheus using these expressions:
+
+```promql
+api:request_success:ratio_rate5m
+api:request_latency_under_300ms:ratio_rate5m
+api:slo_error_budget_remaining:ratio
+```
+
+The rules are loaded from the Prometheus rules directory configured in `prometheus/prometheus.yml`. The error-budget calculation uses a 30-day window; interpret results cautiously during short lab runs because limited traffic does not represent a full 30-day SLO measurement.
+
+
 ### Metrics and dashboards
 - Scrape application metrics using Prometheus.
 - Configure alert rules for API availability and elevated error rates.
