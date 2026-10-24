@@ -1,0 +1,25 @@
+LAST SEEN   TYPE     REASON              OBJECT                           MESSAGE
+10m         Normal   Scheduled           pod/chaos-demo-bc6d877b-22qxs    Successfully assigned chaos-lab/chaos-demo-bc6d877b-22qxs to demo-control-plane
+13m         Normal   Scheduled           pod/chaos-demo-bc6d877b-httjl    Successfully assigned chaos-lab/chaos-demo-bc6d877b-httjl to demo-control-plane
+13m         Normal   ScalingReplicaSet   deployment/chaos-demo            Scaled up replica set chaos-demo-bc6d877b from 0 to 1
+13m         Normal   SuccessfulCreate    replicaset/chaos-demo-bc6d877b   Created pod: chaos-demo-bc6d877b-httjl
+13m         Normal   Pulling             pod/chaos-demo-bc6d877b-httjl    Pulling image "nginx:alpine"
+13m         Normal   Started             pod/chaos-demo-bc6d877b-httjl    Container started
+13m         Normal   Pulled              pod/chaos-demo-bc6d877b-httjl    Successfully pulled image "nginx:alpine" in 19.982s (19.982s including waiting). Image size: 26354394 bytes.
+13m         Normal   Created             pod/chaos-demo-bc6d877b-httjl    Container created
+10m         Normal   FinalizerInited     podchaos/chaos-demo-pod-kill     Finalizer has been inited
+10m         Normal   Applied             podchaos/chaos-demo-pod-kill     Successfully apply chaos for chaos-lab/chaos-demo-bc6d877b-httjl
+10m         Normal   Pulled              pod/chaos-demo-bc6d877b-22qxs    Container image "nginx:alpine" already present on machine and can be accessed by the pod
+10m         Normal   SuccessfulCreate    replicaset/chaos-demo-bc6d877b   Created pod: chaos-demo-bc6d877b-22qxs
+10m         Normal   Created             pod/chaos-demo-bc6d877b-22qxs    Container created
+10m         Normal   Updated             podchaos/chaos-demo-pod-kill     Successfully update finalizer of resource
+10m         Normal   Updated             podchaos/chaos-demo-pod-kill     Successfully update desiredPhase of resource
+10m         Normal   Killing             pod/chaos-demo-bc6d877b-httjl    Stopping container nginx
+10m         Normal   Updated             podchaos/chaos-demo-pod-kill     Successfully update records of resource
+10m         Normal   Started             pod/chaos-demo-bc6d877b-22qxs    Container started
+29s         Normal   Deleted             podchaos/chaos-demo-pod-kill     Experiment has been deleted
+29s         Normal   Updated             podchaos/chaos-demo-pod-kill     Successfully update desiredPhase of resource
+29s         Normal   Recovered           podchaos/chaos-demo-pod-kill     Successfully recover chaos for chaos-lab/chaos-demo-bc6d877b-httjl
+29s         Normal   Updated             podchaos/chaos-demo-pod-kill     Successfully update records of resource
+29s         Normal   FinalizerInited     podchaos/chaos-demo-pod-kill     Finalizer has been removed
+29s         Normal   Updated             podchaos/chaos-demo-pod-kill     Successfully update finalizer of resource

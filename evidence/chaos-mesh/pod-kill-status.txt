@@ -1,0 +1,52 @@
+Name:         chaos-demo-pod-kill
+Namespace:    chaos-lab
+Labels:       <none>
+Annotations:  <none>
+API Version:  chaos-mesh.org/v1alpha1
+Kind:         PodChaos
+Metadata:
+  Creation Timestamp:  2026-10-24T09:45:51Z
+  Finalizers:
+    chaos-mesh/records
+  Generation:        5
+  Resource Version:  66337
+  UID:               c0175a1f-719c-48eb-888c-a87ce323ec75
+Spec:
+  Action:    pod-kill
+  Duration:  30s
+  Mode:      one
+  Selector:
+    Label Selectors:
+      App:  chaos-demo
+    Namespaces:
+      chaos-lab
+Status:
+  Conditions:
+    Status:  True
+    Type:    Selected
+    Status:  True
+    Type:    AllInjected
+    Status:  False
+    Type:    AllRecovered
+    Status:  False
+    Type:    Paused
+  Experiment:
+    Container Records:
+      Events:
+        Operation:      Apply
+        Timestamp:      2026-10-24T09:45:51Z
+        Type:           Succeeded
+      Id:               chaos-lab/chaos-demo-bc6d877b-httjl
+      Injected Count:   1
+      Phase:            Injected
+      Recovered Count:  0
+      Selector Key:     .
+    Desired Phase:      Run
+Events:
+  Type    Reason           Age    From            Message
+  ----    ------           ----   ----            -------
+  Normal  FinalizerInited  2m39s  initFinalizers  Finalizer has been inited
+  Normal  Updated          2m39s  initFinalizers  Successfully update finalizer of resource
+  Normal  Updated          2m39s  desiredphase    Successfully update desiredPhase of resource
+  Normal  Applied          2m39s  records         Successfully apply chaos for chaos-lab/chaos-demo-bc6d877b-httjl
+  Normal  Updated          2m39s  records         Successfully update records of resource
