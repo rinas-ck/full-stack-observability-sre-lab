@@ -223,7 +223,7 @@ This project provides hands-on experience with:
 
 ## Author
 
-**Muhammad Rinas**
+**Mohammad Rinas**
 
 Aspiring Cloud & DevOps Engineer | AWS | Docker | Kubernetes | Terraform | Prometheus | Grafana | CI/CD
 
