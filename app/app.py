@@ -38,6 +38,7 @@ LATENCY = Histogram(
     "http_request_duration_seconds",
     "HTTP request duration in seconds",
     ["service", "endpoint"],
+    buckets=(0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.3, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0),
 )
 
 # OpenTelemetry tracing
@@ -70,14 +71,17 @@ def record_metrics(response):
     endpoint = request.url_rule.rule if request.url_rule else "unknown"
 
     # Update Prometheus metrics
-    REQUESTS.labels(
-        SERVICE_NAME,
-        request.method,
-        endpoint,
-        str(response.status_code),
-    ).inc()
+    # Exclude the metrics scrape endpoint from application SLI calculations
+    if request.path != "/metrics":
+        REQUESTS.labels(
+            SERVICE_NAME,
+            request.method,
+            endpoint,
+            str(response.status_code),
+        ).inc()
 
-    LATENCY.labels(SERVICE_NAME, endpoint).observe(elapsed)
+        LATENCY.labels(SERVICE_NAME, endpoint).observe(elapsed)
+
 
     # Emit structured request logs for Promtail and Loki
     logger.info(
@@ -110,6 +114,12 @@ def work():
     delay = min(float(request.args.get("delay", "0.05")), 2.0)
     time.sleep(max(delay, 0))
     return jsonify(status="completed", delay_seconds=delay)
+
+
+@app.get("/test-error")
+def test_error():
+    app.logger.error("Intentional HTTP 500 test")
+    return jsonify(error="Intentional test error"), 500
 
 
 @app.get("/metrics")

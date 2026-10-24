@@ -1,0 +1,66 @@
+groups:
+  - name: sre-slo-recording-rules
+    interval: 30s
+    rules:
+      # Successful application requests / all application requests
+      - record: api:request_success:ratio_rate5m
+        expr: |
+          sum(rate(http_requests_total{
+            service="observability-api",
+            endpoint!="/metrics",
+            status=~"2.."
+          }[5m]))
+          /
+          clamp_min(
+            sum(rate(http_requests_total{
+              service="observability-api",
+              endpoint!="/metrics"
+            }[5m])),
+            0.001
+          )
+
+      # Percentage of requests completed within 300 ms
+      - record: api:request_latency_under_300ms:ratio_rate5m
+        expr: |
+          sum(rate(http_request_duration_seconds_bucket{
+            service="observability-api",
+            endpoint!="/metrics",
+            le="0.3"
+          }[5m]))
+          /
+          clamp_min(
+            sum(rate(http_request_duration_seconds_count{
+              service="observability-api",
+              endpoint!="/metrics"
+            }[5m])),
+            0.001
+          )
+
+      # Remaining error budget for a 99.9% availability SLO
+      # Remaining error budget for a 99.9% availability SLO
+      - record: api:slo_error_budget_remaining:ratio
+        expr: |
+          clamp_min(
+            1 -
+            (
+              (
+                1 -
+                (
+                  sum(increase(http_requests_total{
+                    service="observability-api",
+                    endpoint!="/metrics",
+                    status=~"2.."
+                  }[30d]))
+                  /
+                  clamp_min(
+                    sum(increase(http_requests_total{
+                      service="observability-api",
+                      endpoint!="/metrics"
+                    }[30d])),
+                    1
+                  )
+                )
+              ) / 0.001
+            ),
+            0
+          )
